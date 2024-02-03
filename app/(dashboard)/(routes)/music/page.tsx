@@ -18,7 +18,7 @@ import { Loader } from "@/components/loader";
 import { cn } from "@/lib/utils";
 
 const MusicPage = () => {
-  const [music, setMusic] = useState<string>();
+  const [music, setMusic] = useState<string>("");
 
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
@@ -33,7 +33,7 @@ const MusicPage = () => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     console.log("submited");
     try {
-      setMusic(undefined);
+      setMusic("");
 
       const response = await axios.post("/api/music", values);
       console.log(response);
