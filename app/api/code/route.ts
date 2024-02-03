@@ -2,7 +2,11 @@ import { auth } from '@clerk/nextjs';
 import { NextResponse } from 'next/server';
 import OpenAI from 'openai';
 
-
+interface message {
+    role: string;
+    content: string;
+  }
+  
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY // This is also the default, can be omitted
@@ -11,7 +15,7 @@ const openai = new OpenAI({
 
 
 
-const instructionMessage:OpenAI.Chat.ChatCompletionRequestMessage={
+const instructionMessage:message={
     role:"system",
     content:"You are a code generator. You must answer only in markdown code snippets.Use code comments for explanations"
 }

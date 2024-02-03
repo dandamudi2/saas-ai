@@ -19,10 +19,13 @@ import { cn } from "@/lib/utils";
 import { BotAvatar } from "@/components/bot-avatar";
 import { UserAvatar } from "@/components/user-avatar";
 
+interface message {
+  role: string;
+  content: string;
+}
+
 const Converstationpage = () => {
-  const [messages, setMessages] = useState<
-    OpenAI.Chat.ChatCompletionRequestMessage[]
-  >([]);
+  const [messages, setMessages] = useState<message[]>([]);
 
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
@@ -37,7 +40,7 @@ const Converstationpage = () => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     console.log("submited");
     try {
-      const userMessage: OpenAI.Chat.ChatCompletionRequestMessage = {
+      const userMessage: message = {
         role: "user",
         content: values.prompt,
       };

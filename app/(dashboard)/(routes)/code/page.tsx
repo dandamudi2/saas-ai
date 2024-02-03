@@ -21,10 +21,13 @@ import { UserAvatar } from "@/components/user-avatar";
 
 import ReactMarkdown from "react-markdown";
 
+interface message {
+  role: string;
+  content: string;
+}
+
 const CodePage = () => {
-  const [messages, setMessages] = useState<
-    OpenAI.Chat.ChatCompletionRequestMessage[]
-  >([]);
+  const [messages, setMessages] = useState<message[]>([]);
 
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
@@ -39,18 +42,23 @@ const CodePage = () => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     console.log("submited");
     try {
-      const userMessage: OpenAI.Chat.ChatCompletionRequestMessage = {
+      // const userMessage: OpenAI.Chat.ChatCompletionRequestMessage = {
+      //   role: "user",
+      //   content: values.prompt,
+      // };
+
+      const userMessage1: message = {
         role: "user",
         content: values.prompt,
       };
 
-      const newMessages = [...messages, userMessage];
+      const newMessages = [...messages, userMessage1];
 
       const response = await axios.post("/api/code", {
         messages: newMessages,
       });
 
-      setMessages((current) => [...current, userMessage, response.data]);
+      setMessages((current) => [...current, userMessage1, response.data]);
 
       form.reset();
     } catch (error: any) {
